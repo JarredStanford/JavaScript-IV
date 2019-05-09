@@ -132,50 +132,37 @@ class Warlock extends Humanoid {
         super(evilAttributes);
     }
     eldritchBlast(target) {
-        let spellTarget = target;
-        let caster = this.name;
         let damage = this.spellPower * 10;
-        return function() {
-            Object.defineProperty(spellTarget, "healthPoints", {value: spellTarget.healthPoints - damage});
-            if (spellTarget.healthPoints > 0) {
-              return `${caster} summons a blast of pure chaos descending from the Eldritch Moon itself. ${spellTarget.name} takes ${damage} chaos damage. ${spellTarget.name} has ${spellTarget.healthPoints} HP remaining.`;
-            } else return `${caster}'s chaotic ways have torn ${spellTarget.name} to pieces, ${spellTarget.name} has died.`;
-          }() 
+        Object.defineProperty(target, "healthPoints", {value: target.healthPoints - damage});
+        if (target.healthPoints > 0) {
+            return `${this.name} summons a blast of pure chaos descending from the Eldritch Moon itself. ${target.name} takes ${damage} chaos damage. ${target.name} has ${target.healthPoints} HP remaining.`;
+            } else return `${this.name}'s chaotic ways have torn ${target.name} to pieces, ${target.name} has died.`;
+          }
     }
-}
 
 class Shadowdancer extends Humanoid {
     constructor(goodAttributes) {
         super(goodAttributes);
     }
     psychicKnife(target) {
-        let spellTarget = target;
-        let caster = this.name;
         let damage = this.spellPower * 10;
-        return function() {
-            Object.defineProperty(spellTarget, "healthPoints", {value: spellTarget.healthPoints - damage});
-            if (spellTarget.healthPoints > 0) {
-              return `OMG ${caster} stabs ${spellTarget.name} with a flurry of stabs from his Psychic Knife! ${spellTarget.name} takes ${damage} psychic damage. ${spellTarget.name} has ${spellTarget.healthPoints} HP remaining.`;
-            } else return `${caster}'s Psychic power overwhelms ${spellTarget.name}, ${spellTarget.name} has died.`;
-          }() 
+        Object.defineProperty(target, "healthPoints", {value: target.healthPoints - damage});
+        if (target.healthPoints > 0) {
+            return `OMG ${this.name} stabs ${target.name} with a flurry of stabs from his Psychic Knife! ${target.name} takes ${damage} psychic damage. ${target.name} has ${target.healthPoints} HP remaining.`;
+            } else return `${this.name}'s Psychic power overwhelms ${target.name}, ${target.name} has died.`;
+          }
     }
-}
 
 class GymnastWizard extends Humanoid {
     constructor(ambiguousAttributes) {
         super(ambiguousAttributes)
     }
     backflipAppleToss(target1, target2) {
-        let spellTarget1 = target1;
-        let spellTarget2 = target2;
-        let caster = this;
         let damage = this.spellPower * 10;
-        return function() {
-        Object.defineProperty(spellTarget1, "healthPoints", {value: spellTarget1.healthPoints + damage});
-        Object.defineProperty(spellTarget2, "healthPoints", {value: spellTarget2.healthPoints + damage});
-        Object.defineProperty(caster, "healthPoints", {value: caster.healthPoints - 2 * damage});
-        return `${caster.name} appears athletically from the shadows and casts her signature spell Backflip Apple Toss. The sacrificial fruit heal successfully increases ${spellTarget1.name}'s HP to ${spellTarget1.healthPoints} and ${spellTarget2.name}'s HP to ${spellTarget2.healthPoints}, but lowers ${caster.name}'s own HP to ${caster.healthPoints}. No springs attached!`;
-    }()
+        Object.defineProperty(target1, "healthPoints", {value: target1.healthPoints + damage});
+        Object.defineProperty(target2, "healthPoints", {value: target2.healthPoints + damage});
+        Object.defineProperty(this, "healthPoints", {value: this.healthPoints - 2 * damage});
+        return `${this.name} appears athletically from the shadows and casts her signature spell Backflip Apple Toss. The sacrificial fruit heal successfully increases ${target1.name}'s HP to ${target1.healthPoints} and ${target2.name}'s HP to ${target2.healthPoints}, but lowers ${this.name}'s own HP to ${this.healthPoints}. No springs attached!`;
     }
 }
 

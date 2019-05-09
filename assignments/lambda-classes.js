@@ -23,14 +23,19 @@ class Instructor extends Person {
         grade(student, subject) {
             return (`${student.name} receives a perfect score on ${subject}.`)
         }
+        reviewSprint(student) {
+            Object.defineProperty(student, "grade" , {value: Math.round(Math.random()*100)});
+            return (`${this.name} has reviewed ${student.name}'s sprint and their grade is now ${student.grade}.`)
+        }
 }
 
 class Student extends Person {
-    constructor (name, age, location, previousBackground, className, favSubjects) {
+    constructor (name, age, location, previousBackground, className, favSubjects, grade) {
         super(name, age, location);
         this.previousBackground = previousBackground;
         this.className = className;
         this.favSubjects = favSubjects;
+        this.grade = grade;
     }
         listsSubjects() {
             return (new Intl.ListFormat().format(this.favSubjects))
@@ -40,6 +45,11 @@ class Student extends Person {
         }
         sprintChallenge(subject) {
             return (`${this.name} has begun sprint challenge on ${subject}.`)
+        }
+        graduate() {
+            if (this.grade >= 70) {
+                return (`${this.name} has a passing score and is ready to graduate!`)
+            } else return (`${this.name} is not ready to graduate and needs to complete some better assignments!`)
         }
     }
 class ProjectManager extends Instructor {
@@ -57,13 +67,21 @@ class ProjectManager extends Instructor {
 }
 
 
-const dan = new Instructor("Dan", 30, "SF", "UI", "javaScript", "I love Cats")
-const jarred = new Student("Jarred", 30, "NJ", "Beer", "WEB20", ["Javascript", "Python", "MongoDB"])
+const dan = new Instructor("Dan", 30, "SF", "UI", "javaScript", "If you can do it, you will get paid to do it.")
+const jarred = new Student("Jarred", 30, "NJ", "Beer", "WEB20", ["Javascript", "Python", "MongoDB"], 85)
 const isaac = new ProjectManager("Isaac", 27, "CA", "React", "Great job!", "webXX", "Josh");
+console.log(dan.speak());
 console.log(dan.demo("React"));
 console.log(dan.grade(jarred, "Sabremetrics"))
+console.log(jarred.speak());
 console.log(jarred.listsSubjects());
 console.log(jarred.PRAssignment("Javascript"));
 console.log(jarred.sprintChallenge("Gym"));
+console.log(isaac.speak());
+console.log(isaac.demo("CSS"));
+console.log(isaac.grade(jarred, "NodeJS"))
 console.log(isaac.standUp("web20_sprint3"));
 console.log(isaac.debugsCode(jarred, "HTML"));
+console.log(isaac.reviewSprint(jarred));
+console.log(isaac.reviewSprint(jarred));
+console.log(jarred.graduate())
